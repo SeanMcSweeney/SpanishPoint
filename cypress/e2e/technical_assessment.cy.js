@@ -24,7 +24,6 @@ describe('Matching Engine Website Test', () => {
       .each(($el, index) => {
         // verify text in list
         const expectedTexts = ['Cue Sheet / AV Work', 'Recording', 'Bundle', 'Advertisement'];
-
         cy.wrap($el).should('contain.text', expectedTexts[index]);
       });
     });
