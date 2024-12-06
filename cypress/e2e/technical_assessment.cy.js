@@ -2,7 +2,7 @@ describe('Matching Engine Website Test', () => {
   it('should navigate to Repertoire Management Module and validate supported products', () => {
     // visit website
     cy.visit('https://www.matchingengine.com/');
-    // mouse over topnav
+    // select navbar burger
     cy.get('.navbar-burger')
       .click();
     // select Repertoire Management Module
@@ -16,19 +16,16 @@ describe('Matching Engine Website Test', () => {
       .click();
     // confirm the header
     cy.contains('h3', 'There are several types of Product Supported:')
-    .next('ul')
-    .within(() => {
-      // Verify the list items
-      const expectedProducts = [
-        'Cue Sheet / AV Work',
-        'Recording',
-        'Bundle',
-        'Advertisement'
-      ];
-      // check each product is visible in the list
-      expectedProducts.forEach(product => {
-        cy.contains('li', product).should('be.visible');
+      .should('be.visible')
+      .next('div')
+      .find('ul')
+      .find('li')
+      .should('have.length', 4)
+      .each(($el, index) => {
+        // verify text in list
+        const expectedTexts = ['Cue Sheet / AV Work', 'Recording', 'Bundle', 'Advertisement'];
+
+        cy.wrap($el).should('contain.text', expectedTexts[index]);
       });
     });
-});
 });
